@@ -10,8 +10,10 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get(':userId')
-  async getUser(@Param('userId') userId:string): Promise<User> {   // Return Users by name
-    return this.userService.getUserById(userId)
+  async getUser(@Param('userId') userId:string): Promise<Object | User> {   // Return Users by name
+    const user = await this.userService.getUserById(userId)
+    if(!user) return {msg:"User not found",status:"error"};
+    return user
   }
 
   @Get()
@@ -21,8 +23,10 @@ export class UserController {
 
   @Post()
   
-  async createUser(@Body() createUserDto:CreateUserDto):Promise<User> {     // Create User with createUserDto Properties
-    return this.userService.createUser(createUserDto.name,createUserDto.password,createUserDto.email)
+  async createUser(@Body() createUserDto:CreateUserDto):Promise<User | Object> {
+    // Create User with createUserDto Properties
+    const user = await this.userService.createUser(createUserDto.name,createUserDto.password,createUserDto.email)
+    return user
   }
   @Patch(':userId')
 
@@ -30,7 +34,7 @@ export class UserController {
     return this.userService.updateUser(userId,updateUserDto);
   }
 
-  @Delete(':userId')
+  @Delete(':userId') 
   async deleteUser(@Param('userId') userId:string):Promise<User> {
     return this.userService.deleteUser(userId)
   }

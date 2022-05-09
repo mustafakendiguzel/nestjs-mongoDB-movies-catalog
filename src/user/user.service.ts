@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { stringify } from 'querystring';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schema/user.schema';
 import { userRepository } from './user.repository';
 import {v4 as uuidv4} from 'uuid'
+import bcrypt from 'bcrypt'
+import { CreateUserDto } from './dto/create-user.dto';
+
 
 @Injectable()
 export class UserService {
@@ -17,7 +19,7 @@ export class UserService {
     return this.userRepository.find({})
   }
 
-  async createUser(name:string,password:string,email:string) :Promise<User> {
+  async createUser(name:string,password:string,email:string) :Promise<User | Object> {
     return this.userRepository.create({
       userId:uuidv4(),
       name,
