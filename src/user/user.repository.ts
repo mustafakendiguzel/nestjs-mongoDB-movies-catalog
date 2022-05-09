@@ -17,6 +17,7 @@ export class userRepository {
 
   async create(user:User) : Promise<User | Object> {
      const newUser = new this.userModel(user)
+
       try {
          return await newUser.save()
       } catch (error) {
