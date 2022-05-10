@@ -11,7 +11,7 @@ export class AuthService {
 
   constructor(private readonly authRepository:authRepository) {}
 
-  async createUser(name:string,password:string,email:string,role:string) :Promise<User | Object> {
+  async createUser(name:string,password:string,email:string,role:string,favMovies:any) :Promise<User | Object> {
 
     if(!password) return {error:{msg:"Password value should be!",status:"error"}}
     const newPassword = await bcrypt.hash(password, 10);
@@ -21,7 +21,8 @@ export class AuthService {
       name,
       password:newPassword,
       email,
-      role      
+      role,
+      favMovies,
     })
   }
     

@@ -1,10 +1,27 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document} from "mongoose";
 
-export type  UserDocument = User & Document
+export type UserDocument = User & Document
+@Schema()
+export class Movies {
+  @Prop()
+  name: string;
+  
+  @Prop()
+  title:string;
+
+  @Prop()
+  description:string;
+
+}
+// Generate a Mongoose Schema before use as Subdocument
+const MoviesSchema = SchemaFactory.createForClass(Movies);
+
+
 
 @Schema()
 export class User {
+
   @Prop()
   userId:string;
   
@@ -16,6 +33,9 @@ export class User {
   
   @Prop({ required: true ,unique:true})
   email:string;
+
+  @Prop({ type: [MoviesSchema] ,default:[]})
+  favMovies: Movies[]
 
   @Prop({default:"user"})
   role:string

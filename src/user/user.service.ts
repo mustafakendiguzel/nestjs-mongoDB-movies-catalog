@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
+
 import { User } from './schema/user.schema';
 import { userRepository } from './user.repository';
 
@@ -17,12 +18,15 @@ export class UserService {
     
   }
 
-  async updateUser(userId:string,userUpdates:UpdateUserDto): Promise<User> {
-    return this.userRepository.findOneAndUpdate({userId},userUpdates)
-  }  
+  async updateUser(userId: string, userUpdates: UpdateUserDto): Promise<User> {   // 
+    return this.userRepository.findOneAndUpdate({ userId },userUpdates);
+}
 
   async deleteUser(userId:string):Promise<User> {
     return this.userRepository.deleteOne({userId})
+
   }
+
+  
 
 }

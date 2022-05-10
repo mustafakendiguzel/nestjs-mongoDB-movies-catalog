@@ -4,7 +4,7 @@ import { UserController } from './user.controller';
 import { User, UserSchema } from './schema/user.schema';
 import { UserService } from './user.service';
 import { userRepository } from './user.repository';
-import { JwtStrategy } from 'src/auth/strategy/jwt.strategy';
+import { JwtStrategy } from 'src/auth/strategy/at.strategy';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],

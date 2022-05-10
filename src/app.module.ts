@@ -9,7 +9,7 @@ import { UserModule } from './user/user.module';
   imports: [
     AuthModule,
     UserModule,
-    MongooseModule.forRoot('mongodb://localhost/nest_test', {
+    MongooseModule.forRoot('mongodb://localhost/nest_test5', {
       autoCreate: true,
     }),
 

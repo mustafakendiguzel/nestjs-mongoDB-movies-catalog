@@ -18,11 +18,12 @@ export class userRepository {
    }
 
    
-   async findOneAndUpdate(userFilterQuery: FilterQuery<User>,user: Partial<User>,): Promise<User> {
-      return await this.userModel.findOneAndUpdate(userFilterQuery, user);
-   }
+   async findOneAndUpdate(userFilterQuery: FilterQuery<User>, user: Partial<User>): Promise<User> {
+        return this.userModel.findOneAndUpdate(userFilterQuery, user, { new: true });
+    }
 
    async deleteOne(userFilterQuery: FilterQuery<User>): Promise<User> {
       return await this.userModel.findOneAndDelete(userFilterQuery);
    }
+
 }

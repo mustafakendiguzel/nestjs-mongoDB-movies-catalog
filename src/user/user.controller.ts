@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as bcrypt from 'bcrypt'
 
 import { User } from './schema/user.schema';
 import { UserService } from './user.service';
@@ -19,6 +20,7 @@ export class UserController {
 
   @Get()
   async getUsers(): Promise<User[]> {    // Return All Users
+  
     return this.userService.getAllUsers();
   }
 
@@ -26,17 +28,15 @@ export class UserController {
   async deleteUser(@Param('userId') userId:string):Promise<User> {
     return this.userService.deleteUser(userId)
   }
-
-  @Post()
-  
- 
+   
   @Patch(':userId')
-
-  async updateUser(@Param('userId') userId:string,@Body() updateUserDto:UpdateUserDto):Promise<User> {  
-    return this.userService.updateUser(userId,updateUserDto);   // Update user profile with UpdateUserDto properties
+  async updateUser(@Param('userId') userId: string, @Body() updateUserDto: UpdateUserDto): Promise<User | Object> {
+    if(updateUserDto.password == "") return {msg:"Password cannot be empty",status:"error"}
+    if(updateUserDto.password) {
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password,10)
+    }
+    return this.userService.updateUser(userId, updateUserDto);
   }
-
-
 
 
 }

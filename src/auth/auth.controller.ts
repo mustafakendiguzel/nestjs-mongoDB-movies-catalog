@@ -14,7 +14,7 @@ export class AuthController {
   @Post('register')
 
   async registerUser(@Body() createUserDto:CreateUserDto):Promise<User | Object> { //CreateUser or Register
-    const user = this.authService.createUser(createUserDto.name, createUserDto.password, createUserDto.email, createUserDto.role)
+    const user = this.authService.createUser(createUserDto.name, createUserDto.password, createUserDto.email, createUserDto.role,createUserDto.favMovies)
     return user
   }
 
@@ -24,9 +24,9 @@ export class AuthController {
     if(!user) throw new UnauthorizedException('User does not exist')
     const match = await bcrypt.compare(loginUserDto.password,user.password)
     if(!match) throw new UnauthorizedException('Password not match')
-    return this.jwtSign(user.userId,user.name,user.email,user.role)
+    return this.jwtSign(user.userId,user.name,user.email,user.role,user.favMovies)
   }
-  async jwtSign(userId:string,name:string,email:string,role:string): Promise<any> {
-    return this.jwtService.sign({userId,name,email,role})
+  async jwtSign(userId:string,name:string,email:string,role:string,favMovies:any): Promise<any> {
+    return this.jwtService.signAsync({userId,name,email,role,favMovies})
   }
 }
