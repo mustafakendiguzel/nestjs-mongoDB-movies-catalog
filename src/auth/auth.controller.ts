@@ -4,7 +4,6 @@ import * as bcrypt from 'bcrypt'
 import { CreateUserDto } from 'src/auth/dto/create-user.dto';
 import { User } from 'src/user/schema/user.schema';
 import { JwtService } from "@nestjs/jwt";
-import { threadId } from 'worker_threads';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/auth.dt';
 
