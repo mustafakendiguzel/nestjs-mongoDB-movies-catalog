@@ -5,6 +5,7 @@ import {v4 as uuidv4} from 'uuid'
 import { authRepository } from "./auth.repository";
 import { userRepository } from "src/user/user.repository";
 
+
 @Injectable({})
 export class AuthService {
 
@@ -27,5 +28,7 @@ export class AuthService {
   async login(email:string): Promise<User> {
     return this.authRepository.findByMail({email})
   }
+  
+  
 }
 
