@@ -9,6 +9,7 @@ import { JwtStrategy } from 'src/auth/strategy/at.strategy';
 @Module({
   imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [UserController],
-  providers: [UserService,userRepository,JwtStrategy]
+  providers: [UserService,userRepository,JwtStrategy],
+  exports: [UserService, JwtStrategy]
 })
 export class UserModule {}

@@ -61,7 +61,19 @@ export class AuthController {
   async jwtSign(userId: string, name: string): Promise<any> {
     return this.jwtService.signAsync({ userId, name });
   }
-  
+  @Get('user')
+  async user(@Req() request: Request) {
+    try {
+      const cookie = request.cookies['jwt'];
+      const data = await this.jwtService.verifyAsync(cookie);
+      if (!data) throw new UnauthorizedException('Your session expired');
+      const user = await this.userService.getUserById(data.userId);
+      return user;
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
+  }
+
   @Post('logout')
   async logout(@Res({ passthrough: true }) response: Response) {
     response.clearCookie('jwt');
