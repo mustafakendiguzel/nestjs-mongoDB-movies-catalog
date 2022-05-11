@@ -38,8 +38,8 @@ export class User {
   @Prop({ types: [MoviesSchema] ,default:[]})
   favMovies: Movies[]
 
-  @Prop({types:"enum",enum:UserRoles,default:UserRoles.Admin })
-  role:UserRoles;
+  @Prop({default:UserRoles.Admin })
+  role:string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

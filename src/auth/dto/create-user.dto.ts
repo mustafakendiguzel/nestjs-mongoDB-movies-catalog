@@ -11,7 +11,7 @@ export class CreateUserDto {
   name: string;
   email: string;
   password: string;
-  role:UserRoles;
+  role:string[];
   favMovies: CreateMoviesDto;
 
 };

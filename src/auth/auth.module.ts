@@ -9,7 +9,6 @@ import { AuthController } from './auth.controller';
 import { authRepository } from './auth.repository';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategy/at.strategy';
-
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
