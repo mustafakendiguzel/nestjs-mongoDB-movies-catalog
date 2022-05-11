@@ -15,7 +15,7 @@ import { JwtStrategy } from './strategy/at.strategy';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
       secret:'super-secret-cat',
-      signOptions:{expiresIn:'1d'}
+      signOptions:{expiresIn:'5d'}
     }),
     UserModule
   ],

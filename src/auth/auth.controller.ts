@@ -6,6 +6,7 @@ import {
   Req,
   Res,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { Response, Request } from 'express';
@@ -15,6 +16,9 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/auth.dt';
 import { UserService } from 'src/user/user.service';
+import { UserRoles } from 'src/user.roles';
+import { AuthGuard } from '@nestjs/passport';
+import { ACGuard, UseRoles } from 'nest-access-control';
 
 @Controller('auth')
 export class AuthController {
@@ -25,6 +29,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
+ 
   async registerUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<User | Object> {
@@ -49,7 +54,7 @@ export class AuthController {
     if (!user) throw new UnauthorizedException('User does not exist');
     const match = await bcrypt.compare(loginUserDto.password, user.password);
     if (!match) throw new UnauthorizedException('Password not match');
-    const jwt = await this.jwtSign(user.userId, user.name);
+    const jwt = await this.jwtSign(user.userId, user.name,user.role);
     response.cookie('jwt', jwt, {
       expires: new Date(Date.now() + 60000),
       httpOnly: true,
@@ -58,8 +63,8 @@ export class AuthController {
       message: 'Login Success',
     };
   }
-  async jwtSign(userId: string, name: string): Promise<any> {
-    return this.jwtService.signAsync({ userId, name });
+  async jwtSign(userId: string, name: string,role:UserRoles): Promise<any> {
+    return this.jwtService.signAsync({ userId, name,role });
   }
   @Get('user')
   async user(@Req() request: Request) {

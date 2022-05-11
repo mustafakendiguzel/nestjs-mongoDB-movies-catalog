@@ -32,6 +32,7 @@
     "cookie-parser": "^1.4.6",
     "express-session": "^1.17.2",
     "mongoose": "^6.3.2",
+    "nest-access-control": "^2.2.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
