@@ -19,6 +19,6 @@ import { RolesGuard } from './roles.guard';
     JwtStrategy,
     { provide: APP_GUARD, useClass: RolesGuard },
   ],
-  exports: [UserService, JwtStrategy],
+  exports: [UserService,userRepository,JwtStrategy],
 })
 export class UserModule {}
